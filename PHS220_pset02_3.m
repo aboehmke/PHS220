@@ -3,23 +3,23 @@
 % Animate a cycloid.
 clear all
 
-r = 1;
-v = 1; 
-dtheta = 0.1; % select increment
-theta = 0:dtheta:(10*pi);
-x = [ ];
-y = [ ];
+r = 1; % circle radius
+v = 1; % translational velocity 
+dTHETA = 0.1; % select rotation increment
+THETA = 0:dTHETA:(10*pi);
+X = [ ];
+Y = [ ];
 % radiusx = [ ];
 % radiusy = [ ];
 for t = 1:150
     % (a) circle
-    circlex = r.*cos(theta) + theta(t);
-    circley = r.*sin(theta) + 1;
+    circleX = r.*cos(THETA) + THETA(t);
+    circleY = r.*sin(THETA) + 1;
     % (b) cycloid
-    x(t) = r*(theta(t) - sin(theta(t))); % circle centered at (r*theta,r)
-    y(t) = r*(1 - cos(theta(t)));
+    X(t) = r*(THETA(t) - sin(THETA(t))); % circle centered at (r*theta,r)
+    Y(t) = r*(1 - cos(THETA(t)));
    
-    plot(x,y,'r-',circlex,circley,'k-')
+    plot(X,Y,'r-',circleX,circleY,'k-')
     hold on
     axis([-2,20,-4,4]);
     ax = gca;
