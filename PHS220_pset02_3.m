@@ -17,8 +17,6 @@ for t = 1:150
     % (b) cycloid
     x(t) = r*(theta(t) - sin(theta(t))); % circle centered at (r*theta,r)
     y(t) = r*(1 - cos(theta(t)));
-    % (c) radius
-    
    
     plot(x,y,'r-',circlex,circley,'k-')
     hold on
