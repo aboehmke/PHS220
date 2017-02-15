@@ -1,5 +1,6 @@
 % Alex Boehmke
 % pset02, due 08Feb
+% Animate a cycloid.
 clear all
 
 r = 1;
