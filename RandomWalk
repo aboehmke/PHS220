@@ -1,5 +1,4 @@
 clear all; close all;
-% Alex Boehmke
 % simulate 1D Random Walk using Monte Carlo method
 
 % generate a random number of walkers
