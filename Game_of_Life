@@ -1,0 +1,36 @@
+clear all; close all;
+% Game of Life
+
+% the world consists of an LxL matrix
+% a cell in the world is an element of the matrix
+% a cell at a time can have one of two states, alive or dead
+% at each discrete time step, the state of all cells are updated simultaneously
+% the next state of each cell depends on 
+% its current state and on  
+% the current states of its 8 neighbors according to 3 rules:
+% if a cell is alive and has >= 2 living neighbors, it stays alive
+% if a cell is dead and has exactly 3 living neighbors, it becomes alive
+% if a cell is alive and has <= 1 living neighbors, it dies
+
+L = 75;
+world = round(rand(L));
+number_of_steps = 700;
+
+for i = 1:number_of_steps
+    % test neighbors
+    test = circshift(world,[0,1]) + circshift(world,[0,-1]) + ...
+        circshift(world,[1,0]) + circshift(world,[-1,0]) + ...
+        circshift(world,[1,1]) + circshift(world,[1,-1]) + ...
+        circshift(world,[-1,1]) + circshift(world,[-1,-1]);
+   
+    world(world==0 & test==3) = 1; % dead and more than 3 living neighbors
+  
+    world(world==1 & (test<=1 | test>=4)) = 0; 
+   
+    imshow(1-world,'Colormap',winter,'InitialMagnification','fit'); % blue cell is alive
+    drawnow
+    
+end 
+
+
+
