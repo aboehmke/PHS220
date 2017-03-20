@@ -1,0 +1,44 @@
+clear all; close all;
+Population Dynamics and Chaos
+
+% rate of population growth r, can be btw 0 and 1
+% bifurcation depends on r--test various r-values
+r = [0.13, 0.50, ...
+     0.752, 0.80, 0.82, 0.84, 0.86, 0.87, 0.88, 0.89, 0.892, 0.8922, ...
+     0.90, 0.92, 0.94, 0.96, 0.98]; 
+
+N = 600; % N must be larger than transient interval
+X1 = rand(1,N-1);
+X2 = X1 .* (1 - 10^-6);
+
+for i = 2:N-1
+    X1(i+1) = 4*r(3)*X1(i)*(1-X1(i));
+    X2(i+1) = 4*r(3)*X2(i)*(1-X2(i));
+end
+T = [1:N];
+figure
+plot(T,X1,'^',T,X2,'O');
+xlabel('n');
+ylabel('x_{n+1} = 4rx_{n}(1-x_{n})');
+ylim([0 1]);
+
+%Bifurcation diagram
+plot(0,0);
+axis([0,1,0,1])
+xlabel('r');
+ylabel('X_n');
+title('Bifurcation diagram')
+hold on
+ 
+for r = 0:0.01:1
+    Raxis = r .* ones(200);
+    for i = 2:N-1
+        X1(i+1) = 4*r*X1(i)*(1-X1(i));
+    end
+    plot(Raxis,X1(200:399),'g.')
+    plot(Raxis,X1(400:599),'b.')
+    xlabel('r')
+    ylabel('x_n')
+    drawnow
+end    
+hold off
