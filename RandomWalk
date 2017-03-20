@@ -1,0 +1,59 @@
+clear all; close all;
+% Alex Boehmke
+% simulate 1D Random Walk using Monte Carlo method
+
+% generate a random number of walkers
+a = rand * 10; 
+scale = 1000; % choose order of magnitude of number of walkers
+numWalkers = round(scale * a);
+
+X = zeros(1,numWalkers); % initial position
+p = 0.50; % probability of going right
+q = 1-p; % probability of going left
+n = 100; % number of steps
+step_size = 1;
+    
+for i=1:n
+    W = rand(1,numWalkers); 
+
+    R = find(W<=p); % indices of walkers going right
+    L = find(W>p); % indices of walkers going left
+    
+    % update positions
+    X(R) = X(R) + step_size; % step size is 1
+    X(L) = X(L) - step_size;
+    
+    plot(X,1:numWalkers, 'c.')
+    axis([-n*q,n*p,0,numWalkers])
+    xlabel('displacement');
+    set(gca, 'YTick', []);
+    drawnow
+end
+
+% plot histogram and theoretical probability curve
+ave_displacement = sum(X)/numWalkers
+ave_sqr_displacement = sum(X.^2)/numWalkers;
+variance = ave_sqr_displacement - ave_displacement^2 % sigma squared
+% variance equals ave_sqr_displacement when p=0.5, b/c
+% ave_displacement is zero
+
+figure
+h1 = histogram(X);
+h1.NumBins = n/2; % What's the best way to choose the number of bins?
+hold on
+
+Xaxis = min(X):1:max(X);
+%Xaxis = h1.BinLimits(1):0.01:h1.BinLimits(2);
+theoretical_ave_displacement = (2*p - 1)*n*step_size;
+theoretical_variance = 4*p*(1-p)*n*step_size;
+coeff = 1/sqrt(2*pi*theoretical_variance);
+EXPON1 = (Xaxis - theoretical_ave_displacement).^2; % should equal Xaxis^2 when p=0.5
+expon2 = -2 * theoretical_variance;
+c = 2 * numWalkers;
+G = c * coeff * exp(EXPON1 ./ expon2);
+plot(Xaxis,G,'LineWidth',1.5)
+
+xlabel('displacement');
+ylabel('number of walkers');
+title('displacement distribution of random walkers')
+hold off
