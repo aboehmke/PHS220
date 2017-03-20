@@ -10,7 +10,8 @@ its current state and on
 the current states of its 8 neighbors according to 3 rules:
 if a cell is alive and has >= 2 living neighbors, it stays alive
 if a cell is dead and has exactly 3 living neighbors, it becomes alive
-%} if a cell is alive and has <= 1 living neighbors, it dies
+if a cell is alive and has <= 1 living neighbors, it dies
+%} 
 
 L = 75;
 world = round(rand(L));
