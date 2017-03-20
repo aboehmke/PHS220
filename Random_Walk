@@ -23,18 +23,16 @@ for i=1:n
     X(L) = X(L) - step_size;
     
     plot(X,1:numWalkers, 'c.')
-    axis([-n*q,n*p,0,numWalkers])
+    axis([-n*q,n*p,0,numWalkers]);
     xlabel('displacement');
     set(gca, 'YTick', []);
     drawnow
 end
 
 % plot histogram and theoretical probability curve
-ave_displacement = sum(X)/numWalkers
+ave_displacement = sum(X)/numWalkers;
 ave_sqr_displacement = sum(X.^2)/numWalkers;
-variance = ave_sqr_displacement - ave_displacement^2 % sigma squared
-% variance equals ave_sqr_displacement when p=0.5, b/c
-% ave_displacement is zero
+variance = ave_sqr_displacement - ave_displacement^2; % sigma squared
 
 figure
 h1 = histogram(X);
@@ -42,7 +40,6 @@ h1.NumBins = n/2; % What's the best way to choose the number of bins?
 hold on
 
 Xaxis = min(X):1:max(X);
-%Xaxis = h1.BinLimits(1):0.01:h1.BinLimits(2);
 theoretical_ave_displacement = (2*p - 1)*n*step_size;
 theoretical_variance = 4*p*(1-p)*n*step_size;
 coeff = 1/sqrt(2*pi*theoretical_variance);
@@ -50,9 +47,9 @@ EXPON1 = (Xaxis - theoretical_ave_displacement).^2; % should equal Xaxis^2 when 
 expon2 = -2 * theoretical_variance;
 c = 2 * numWalkers;
 G = c * coeff * exp(EXPON1 ./ expon2);
-plot(Xaxis,G,'LineWidth',1.5)
+plot(Xaxis,G,'LineWidth',1.5);
 
 xlabel('displacement');
 ylabel('number of walkers');
-title('displacement distribution of random walkers')
+title('displacement distribution of random walkers');
 hold off
